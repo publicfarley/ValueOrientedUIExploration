@@ -30,8 +30,6 @@ struct LoginViewModel {
         case evening
     }
     
-    var loginState: LoginState = .unAuthenticated
-        
     func signIn(with loginStateHandler: @escaping (LoginState) -> Void) {
         loginStateHandler(.inTheProcessOfAuthenticating)
         

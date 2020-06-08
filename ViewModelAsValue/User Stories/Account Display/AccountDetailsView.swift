@@ -37,8 +37,22 @@ struct AccountDetailsView: View {
     }
 }
 
-//struct AccountDetailsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AccountDetailsView()
-//    }
-//}
+
+struct AccountDetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+        accountDetailsView()
+    }
+    
+    static func accountDetailsView() -> AnyView {
+        guard let account = Account.mockAccountList.first else {
+            return AnyView(Text("No Account"))
+        }
+        
+        let accountDetailsViewModel =
+            AccountDetailsViewModel(
+                account: account,
+                done: {})
+        
+        return AnyView(AccountDetailsView(accountDetailsViewModel: accountDetailsViewModel))
+    }
+}

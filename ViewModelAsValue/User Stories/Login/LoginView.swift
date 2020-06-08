@@ -51,3 +51,17 @@ struct LoginView: View {
     }
 }
 
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        loginView()
+    }
+    
+    static func loginView() -> some View {
+        let loginViewModel = LoginViewModel()
+        
+        return LoginView(loginViewModel: loginViewModel,
+                         isLoggedIn: .constant(false))
+    }
+    
+}

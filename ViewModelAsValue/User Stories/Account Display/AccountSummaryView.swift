@@ -24,8 +24,14 @@ struct AccountSummaryView: View {
     }
 }
 
-//struct AccountSummaryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AccountSummaryView()
-//    }
-//}
+struct AccountSummaryView_Previews: PreviewProvider {
+    static var previews: some View {
+        accountSummaryView()
+    }
+    
+    static func accountSummaryView() -> some View {
+        let accountSummaryViewModel = AccountSummaryViewModel(accounts: Account.mockAccountList, reportSelectedAccountNumber: { _ in })
+        
+        return AccountSummaryView(accountSummaryViewModel: accountSummaryViewModel)
+    }
+}

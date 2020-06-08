@@ -97,17 +97,15 @@
 		B40781472489FA9C00A5016A /* ViewModelAsValue */ = {
 			isa = PBXGroup;
 			children = (
+				B4E84C66248DD79900D41C47 /* User Stories */,
+				B407817C248DD0F000A5016A /* Domain */,
+				B407817D248DD16800A5016A /* Common */,
 				B40781482489FA9C00A5016A /* AppDelegate.swift */,
 				B407814A2489FA9C00A5016A /* SceneDelegate.swift */,
-				B407814C2489FA9C00A5016A /* MainCoordinator.swift */,
-				B4E84C65248DD60A00D41C47 /* Login */,
 				B407814E2489FA9F00A5016A /* Assets.xcassets */,
 				B40781532489FA9F00A5016A /* LaunchScreen.storyboard */,
 				B40781562489FA9F00A5016A /* Info.plist */,
 				B40781502489FA9F00A5016A /* Preview Content */,
-				B407817F248DD47A00A5016A /* Account Display */,
-				B407817C248DD0F000A5016A /* Domain */,
-				B407817D248DD16800A5016A /* Common */,
 			);
 			path = ViewModelAsValue;
 			sourceTree = "<group>";
@@ -172,6 +170,16 @@
 				B407816C2489FCAE00A5016A /* LoginViewModel.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		B4E84C66248DD79900D41C47 /* User Stories */ = {
+			isa = PBXGroup;
+			children = (
+				B407814C2489FA9C00A5016A /* MainCoordinator.swift */,
+				B4E84C65248DD60A00D41C47 /* Login */,
+				B407817F248DD47A00A5016A /* Account Display */,
+			);
+			path = "User Stories";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
