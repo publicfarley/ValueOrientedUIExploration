@@ -23,6 +23,8 @@
 		B4078177248D7CF700A5016A /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4078176248D7CF700A5016A /* Account.swift */; };
 		B4078179248D7F4100A5016A /* AccountDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4078178248D7F4100A5016A /* AccountDetailsViewModel.swift */; };
 		B407817B248D810E00A5016A /* AccountDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B407817A248D810E00A5016A /* AccountDetailsView.swift */; };
+		B46C554B248F2E6600269763 /* KeyboardAwareViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46C554A248F2E6600269763 /* KeyboardAwareViewModifier.swift */; };
+		B46C5550248F757F00269763 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46C554F248F757F00269763 /* ActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,9 @@
 		B4078176248D7CF700A5016A /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		B4078178248D7F4100A5016A /* AccountDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsViewModel.swift; sourceTree = "<group>"; };
 		B407817A248D810E00A5016A /* AccountDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsView.swift; sourceTree = "<group>"; };
+		B46C554A248F2E6600269763 /* KeyboardAwareViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyboardAwareViewModifier.swift; path = ViewModelAsValue/Common/UI/KeyboardAwareViewModifier.swift; sourceTree = SOURCE_ROOT; };
+		B46C554E248F71ED00269763 /* ViewModelAsValue.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ViewModelAsValue.entitlements; sourceTree = "<group>"; };
+		B46C554F248F757F00269763 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +102,7 @@
 		B40781472489FA9C00A5016A /* ViewModelAsValue */ = {
 			isa = PBXGroup;
 			children = (
+				B46C554E248F71ED00269763 /* ViewModelAsValue.entitlements */,
 				B4E84C66248DD79900D41C47 /* User Stories */,
 				B407817C248DD0F000A5016A /* Domain */,
 				B407817D248DD16800A5016A /* Common */,
@@ -147,6 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				B4078170248C22DA00A5016A /* ViewTransitions.swift */,
+				B46C554A248F2E6600269763 /* KeyboardAwareViewModifier.swift */,
+				B46C554F248F757F00269763 /* ActivityIndicator.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -287,6 +295,8 @@
 				B4078173248D6F0700A5016A /* AccountSummaryView.swift in Sources */,
 				B4078171248C22DA00A5016A /* ViewTransitions.swift in Sources */,
 				B407814B2489FA9C00A5016A /* SceneDelegate.swift in Sources */,
+				B46C5550248F757F00269763 /* ActivityIndicator.swift in Sources */,
+				B46C554B248F2E6600269763 /* KeyboardAwareViewModifier.swift in Sources */,
 				B407816B2489FC8A00A5016A /* LoginView.swift in Sources */,
 				B4078179248D7F4100A5016A /* AccountDetailsViewModel.swift in Sources */,
 				B4078177248D7CF700A5016A /* Account.swift in Sources */,
@@ -446,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ViewModelAsValue/ViewModelAsValue.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ViewModelAsValue/Preview Content\"";
 				DEVELOPMENT_TEAM = M8T74C3QWG;
@@ -457,6 +468,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.purefunc.ViewModelAsValue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -466,6 +478,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ViewModelAsValue/ViewModelAsValue.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ViewModelAsValue/Preview Content\"";
 				DEVELOPMENT_TEAM = M8T74C3QWG;
@@ -477,6 +490,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.purefunc.ViewModelAsValue;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

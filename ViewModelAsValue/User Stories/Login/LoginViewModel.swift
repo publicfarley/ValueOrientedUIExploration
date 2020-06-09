@@ -8,19 +8,42 @@
 
 import Foundation
 
-struct Credentials {
-    let userID: String
-    let password: String
+struct UserID {
+    let value: String
+    let validLength = 8
+    
+    init(value: String) throws {
+        let receivedUserIDLength = value.count
+        
+        guard receivedUserIDLength >= validLength else {
+            throw AuthenticationError.invalidUserIDLength(received: receivedUserIDLength,
+                                                          expected: validLength)
+        }
+        
+        self.value = value
+    }
 }
-enum AuthenticationError {
+
+struct Password {
+    let value: String
+}
+
+struct Credentials {
+    let userID: UserID
+    let password: Password
+}
+
+enum AuthenticationError: Error {
+    case invalidUserIDLength(received: Int, expected: Int)
     case invalidCredentials
+    case unexpectedError
 }
 
 struct LoginViewModel {
-    enum LoginState {
+    enum AuthenticationState {
         case unAuthenticated
         case inTheProcessOfAuthenticating
-        case error(AuthenticationError)
+        case error(Error)
         case authenticated
     }
     
@@ -30,27 +53,44 @@ struct LoginViewModel {
         case evening
     }
     
-    func signIn(with loginStateHandler: @escaping (LoginState) -> Void) {
-        loginStateHandler(.inTheProcessOfAuthenticating)
+    func authenticate(userID: String, password: String, with authenticationStateHandler: @escaping (AuthenticationState) -> Void) {
+        do {
+            let userID = try UserID(value: userID)
+            let password = Password(value: password)
+            
+            let credentials = Credentials(userID: userID, password: password)
+            
+            signIn(using: credentials, with: authenticationStateHandler)
+        } catch {
+            authenticationStateHandler(.error(error))
+        }
+    }
+    
+    private func signIn(using credentials: Credentials,
+                        with authenticationStateHandler: @escaping (AuthenticationState) -> Void) {
+        
+        authenticationStateHandler(.inTheProcessOfAuthenticating)
         
         // Simulate Server call
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             
-            if let authenticationError =
-                self.validate(credentials: Credentials(userID: "username",
-                                                       password: "password")) {
+            if let authenticationError = self.validate(credentials: credentials) {
 
-                loginStateHandler(.error(authenticationError))
+                authenticationStateHandler(.error(authenticationError))
                     
                 return
             }
 
-            loginStateHandler(.authenticated)
+            authenticationStateHandler(.authenticated)
         }
     }
     
     private func validate(credentials: Credentials) -> AuthenticationError? {
-        nil
-        //Bool.random() ? nil : .invalidCredentials
+        guard credentials.password.value.caseInsensitiveCompare("password") == .orderedSame else {
+            return .invalidCredentials
+        }
+        
+        return nil
     }
 }
+
