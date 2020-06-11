@@ -94,3 +94,14 @@ struct LoginViewModel {
     }
 }
 
+extension LoginViewModel.AuthenticationState: Equatable {
+    static func == (lhs: LoginViewModel.AuthenticationState, rhs: LoginViewModel.AuthenticationState) -> Bool {
+        switch (lhs,rhs) {
+        case (.unAuthenticated, .unAuthenticated): return true
+        case (.authenticated, .authenticated): return true
+        case (.inTheProcessOfAuthenticating, .inTheProcessOfAuthenticating): return true
+        default: return false // Note: We are just saying that errors with associated values will be false, since the value may not be equatable
+        }
+    }
+}
+

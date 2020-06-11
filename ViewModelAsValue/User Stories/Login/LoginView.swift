@@ -17,13 +17,15 @@ struct LoginView: View {
     
     @State private var userID: String = ""
     @State private var password: String = ""
-    @State private var statusMessage: String = " "
+    @State private var statusMessage: String = ""
     @State private var isError: Bool = false
+    @State private var status: LoginViewModel.AuthenticationState = .unAuthenticated
     
     var body: some View {
         VStack {
             VStack {
-                Text("Welcome to the App")
+                Text("Welcome to Accounts!")
+                    .font(.title)
                     .padding(.top, 20)
                 
                 Image(systemName: "person.crop.circle")
@@ -34,17 +36,19 @@ struct LoginView: View {
                     .padding(.bottom, 20)
                     .padding(.top, 25)
             }
-            .scaleEffect(statusMessage == Self.successMessage ? 0 : 1)
-            .animation(statusMessage == Self.successMessage
+            .scaleEffect(status == .authenticated ? 0 : 1)
+            .animation(status == .authenticated
                 ? .spring()
                 : .interpolatingSpring(mass: 1.0,stiffness: 100.0,damping: 10,initialVelocity: 0))
 
             ActivityIndicator()
-                .opacity(statusMessage == "Authenticating" ? 1 : 0)
+                .opacity(status == .inTheProcessOfAuthenticating ? 1 : 0)
 
-            Text(statusMessage)
-                .foregroundColor(isError ? .red : .primary)
-                .frame(height: 20)
+            if status == .authenticated {
+                Text(Self.successMessage)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(height: 20)
+            }
             
             VStack {
                 VStack(spacing: 10) {
@@ -65,53 +69,67 @@ struct LoginView: View {
                                                      with: self.loginStateHandler)
                 }) {
                     Text("Login")
-                }.disabled(userID.count == 0 ||
-                           password.count == 0 ||
-                           statusMessage != " ")
+                }.disabled(userID.count == 0 || password.count == 0 || status != .unAuthenticated)
                  .padding()
             }
-            .scaleEffect(statusMessage == Self.successMessage ? 0 : 1)
-            .animation(statusMessage == Self.successMessage
+            .scaleEffect(status == .authenticated ? 0 : 1)
+            .animation(status == .authenticated
                 ? .spring()
                 : .interpolatingSpring(mass: 1.0,stiffness: 100.0,damping: 10,initialVelocity: 0))
             
             Spacer()
         }
         .keyboardAwarePadding()
+        .alert(isPresented: $isError) {
+            Alert(title: Text("Authentication Error"),
+                  message: Text("\(statusMessage)"),
+                  dismissButton: .default(Text("OK"), action: { self.setToInitialState() }))
+        }
     }
     
     func loginStateHandler(handle state: LoginViewModel.AuthenticationState) {
+        status = state
+
         switch state {
         case .unAuthenticated:
-            statusMessage = " "
+            statusMessage = ""
         
         case .inTheProcessOfAuthenticating:
             statusMessage = "Authenticating"
         
         case .error(let authenticationError):
             isError = true
-            statusMessage = "\(authenticationError)"
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.setToInitialState()
-            }
+            statusMessage = "\(toMessage(from: authenticationError))"
             
         case .authenticated:
-            statusMessage = Self.successMessage
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let twoSeconds: Double = 2
+            DispatchQueue.main.asyncAfter(deadline: .now() + twoSeconds) {
                 self.isLoggedIn = true
             }
         }
     }
     
     private func setToInitialState() {
+        self.status = .unAuthenticated
         self.isError = false
-        self.statusMessage = " "
+        self.statusMessage = ""
         self.userID = ""
         self.password = ""
     }
+    
+    private func toMessage(from error: Error) -> String {
+        switch error {
+        case AuthenticationError.invalidCredentials:
+            return "Your userID or password was incorrect. Please try again."
+        case AuthenticationError.invalidUserIDLength(_, let expectedCharacterCount):
+            return "Your userID was less than the required \(expectedCharacterCount) characters. Please try again."
+        case AuthenticationError.unexpectedError:
+            fallthrough
+        default:
+            return "We are experiencing technical issues. Please try again."
+        }
+    }
 }
-
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
@@ -125,3 +143,4 @@ struct LoginView_Previews: PreviewProvider {
                          isLoggedIn: .constant(false))
     }
 }
+
