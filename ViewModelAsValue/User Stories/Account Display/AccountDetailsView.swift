@@ -13,30 +13,54 @@ struct AccountDetailsView: View {
     
     var body: some View {
         VStack {
-            Text("\(accountDetailsViewModel.accountNumber)")
-                .font(.largeTitle)
+            accountNumber
             
             Spacer()
             
-            Text("\(accountDetailsViewModel.nickName)")
-                .bold()
+            accountNickName
                 .padding()
             
-            Text("\(accountDetailsViewModel.accountType)").padding()
+            accountType
+                .padding()
 
-            Text("\(accountDetailsViewModel.balance)").padding()
+            accountBalance
+                .padding()
             
-            Button(action: {
-                self.accountDetailsViewModel.done()
-            }) {
-                Text("Done")
-            }
+            doneButton
             
             Spacer()
         }
     }
 }
 
+// MARK: Body Components
+private extension AccountDetailsView {
+    var accountNumber: some View {
+        Text("\(accountDetailsViewModel.accountNumber)")
+            .font(.largeTitle)
+    }
+    
+    var accountNickName: some View {
+        Text("\(accountDetailsViewModel.nickName)")
+            .bold()
+    }
+    
+    var accountType: some View {
+        Text("\(accountDetailsViewModel.accountType)")
+    }
+    
+    var accountBalance: some View {
+       Text("\(accountDetailsViewModel.balance)")
+    }
+    
+    var doneButton: some View {
+        Button(action: {
+            self.accountDetailsViewModel.done()
+        }) {
+            Text("Done")
+        }
+    }
+}
 
 struct AccountDetailsView_Previews: PreviewProvider {
     static var previews: some View {

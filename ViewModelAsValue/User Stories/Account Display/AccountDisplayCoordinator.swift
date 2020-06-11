@@ -14,11 +14,11 @@ struct AccountDisplayCoordinator: View {
     var body: some View {
         VStack {
             if selectedAccountNumber == nil {
-                accountSummaryView()
+                accountSummaryView
                     .transition(.backwardScreenTransition)
                     .animation(.default)
             } else {
-                accountDetailsView()
+                accountDetailsView
                     .transition(.forwardScreenTransition)
                     .animation(.default)
             }
@@ -28,8 +28,11 @@ struct AccountDisplayCoordinator: View {
     func select(accountNumber: String) {
         selectedAccountNumber = accountNumber
     }
-        
-    private func accountSummaryView() -> some View {
+}
+
+// MARK: Body Components
+private extension AccountDisplayCoordinator {
+    var accountSummaryView: some View {
         let accountSummaryViewModel = AccountSummaryViewModel(
             accounts: Account.mockAccountList,
             reportSelectedAccountNumber: self.select(accountNumber:))
@@ -40,7 +43,7 @@ struct AccountDisplayCoordinator: View {
         return accountSummaryView
     }
     
-    private func accountDetailsView() -> AnyView {
+    var accountDetailsView: AnyView {
         guard let selectedAccount = Account.mockAccountList.first(where: {
             $0.accountNumber == selectedAccountNumber
         }) else {
@@ -56,7 +59,6 @@ struct AccountDisplayCoordinator: View {
 
         return AnyView(accountDetailsView)
     }
-
 }
 
 struct AccountManipulationCoordinator_Previews: PreviewProvider {

@@ -14,22 +14,32 @@ struct MainCoordinator: View {
     var body: some View {
         VStack {
             if !isLoggedIn {
-                LoginView(loginViewModel: LoginViewModel(),
-                          isLoggedIn: $isLoggedIn)
+                loginView
                     .transition(.backwardScreenTransition)
             } else {
-                VStack {
-                    AccountDisplayCoordinator()
-                    
-                    Spacer()
-                    
-                    Button(action: { withAnimation { self.isLoggedIn = false } }) {
-                        Text("Logout")
-                    }.padding()
-                }
-                .transition(.forwardScreenTransition)
-                .animation(.default)
+                landingScreen
+                    .transition(.forwardScreenTransition)
+                    .animation(.default)
             }
+        }
+    }
+}
+
+// MARK: Body Components
+private extension MainCoordinator {
+    var loginView: some View {
+        LoginView(loginViewModel: LoginViewModel(), isLoggedIn: $isLoggedIn)
+    }
+    
+    var landingScreen: some View {
+        VStack {
+            AccountDisplayCoordinator()
+            
+            Spacer()
+            
+            Button(action: { withAnimation { self.isLoggedIn = false } }) {
+                Text("Logout")
+            }.padding()
         }
     }
 }

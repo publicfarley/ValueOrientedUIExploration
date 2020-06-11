@@ -13,6 +13,13 @@ struct AccountSummaryView: View {
     let accountSummaryViewModel: AccountSummaryViewModel
     
     var body: some View {
+        accountList
+    }
+}
+
+// MARK: Body Components
+private extension AccountSummaryView {
+    var accountList: some View {
         List {
             ForEach(accountSummaryViewModel.accountNumbers, id: \.self) { item in
                 Button(action: { self.accountSummaryViewModel.reportSelectedAccountNumber(item)
