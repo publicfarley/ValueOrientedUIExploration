@@ -13,13 +13,15 @@ struct MainCoordinator: View {
     
     var body: some View {
         VStack {
-            if !isLoggedIn {
+            switch isLoggedIn {
+            
+            case false:
                 loginView
-                    .transition(.backwardScreenTransition)
-            } else {
-                landingScreen
                     .transition(.forwardScreenTransition)
-                    .animation(.default)
+            
+            case true:
+                landingScreen
+                    .transition(.move(edge: .bottom))
             }
         }
     }

@@ -13,13 +13,14 @@ struct AccountDisplayCoordinator: View {
     
     var body: some View {
         VStack {
-            if selectedAccountNumber == nil {
-                accountSummaryView
-                    .transition(.backwardScreenTransition)
-                    .animation(.default)
-            } else {
+            switch selectedAccountNumber {
+            case .some:
                 accountDetailsView
-                    .transition(.forwardScreenTransition)
+                    .transition(.opacity)
+                    .animation(.default)
+            case .none:
+                accountSummaryView
+                    .transition(.opacity)
                     .animation(.default)
             }
         }
